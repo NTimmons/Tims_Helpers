@@ -27,3 +27,13 @@ public:
 		return func(_in);
 	}
 };
+
+//Example approximate type function overload.
+template< typename T, int accNumurator >
+float sinf(ApproxType<T, accNumurator> _x)
+{
+	static constexpr int accuracy = 8;
+	typedef std::conditional < accuracy >= accNumurator, FuncWrapper<ApproxSin_Order7>, FuncWrapper<std::sinf> >::type A;
+
+	return A::Call(_x.Get());
+}
